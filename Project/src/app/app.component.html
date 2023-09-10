@@ -1,7 +1,24 @@
+<ng-template [ngIf]="blueClass">
+    <p>LALALAL</p>
+</ng-template>
+
+
+
+<button (click)="blueClass = !blueClass" [ngClass]="{ blue: blueClass}"
+    [ngStyle]="{ 'font-size.px': fontSize }">Change</button>
+
+<button (click)="fontSize = fontSize + 20">Resize</button>
+<hr>
+
 <input (keyup)="changeImage($event)" [value]="imgUrl">
 
-<app-post [img]="imgUrl" (imgSelected)="logImg($event)">
+<app-post *ngFor="let item of images" [img]="item" (imgSelected)="logImg($event)">
     <p>LALALA</p>
 </app-post>
 
-<p>lala</p>
+<p>laladdd</p>
+<p>{{ name | titlecase }}</p>
+<p>{{ currentDate | date: 'MMMM d' }}</p>
+<p>{{ cost | currency: 'JPY' }}</p>
+<p>{{ temperature | number: '1.2-5' }}</p>
+<p>{{ pizza | json }}</p>
