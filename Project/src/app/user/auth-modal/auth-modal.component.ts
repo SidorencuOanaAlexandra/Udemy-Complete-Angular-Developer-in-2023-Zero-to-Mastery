@@ -7,7 +7,7 @@ import { ModalService } from 'src/app/services/modal.service';
   styleUrls: ['./auth-modal.component.css']
 })
 export class AuthModalComponent implements OnInit, OnDestroy {
-  private modalId = 'auth'
+  modalId = 'auth'
 
   constructor(public modal: ModalService) { }
 
