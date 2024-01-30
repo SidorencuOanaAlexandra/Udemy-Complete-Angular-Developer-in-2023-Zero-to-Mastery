@@ -11,8 +11,21 @@ export class TabsContainerComponent implements AfterContentInit {
   constructor() { }
 
   ngAfterContentInit(): void {
-    console.log("someting")
-    console.log(this.tabs);
+    const activeTabs = this.tabs?.filter(x => x.isActive)
+
+    if (!activeTabs || activeTabs.length === 0) {
+      this.selectTab(this.tabs!.first)
+    }
+  }
+
+  selectTab(tab: TabComponent) {
+    this.tabs?.forEach(tab => {
+      tab.isActive = false
+    })
+
+    tab.isActive = true
+
+    return false
   }
 
 }
