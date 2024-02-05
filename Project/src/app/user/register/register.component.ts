@@ -11,11 +11,27 @@ export class RegisterComponent {
     Validators.required,
     Validators.minLength(3)
   ])
-  email = new FormControl('')
-  age = new FormControl('')
-  password = new FormControl('')
-  confirmPassword = new FormControl('')
-  phoneNumber = new FormControl('')
+  email = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ])
+  age = new FormControl('', [
+    Validators.required,
+    Validators.min(18),
+    Validators.max(80)
+  ])
+  password = new FormControl('', [
+    Validators.required,
+    Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm')
+  ])
+  confirmPassword = new FormControl('', [
+    Validators.required,
+  ])
+  phoneNumber = new FormControl('', [
+    Validators.required,
+    Validators.minLength(13),
+    Validators.maxLength(13)
+  ])
 
   registerForm = new FormGroup({
     name: this.name,
