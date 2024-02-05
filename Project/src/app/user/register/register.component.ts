@@ -22,7 +22,7 @@ export class RegisterComponent {
   ])
   password = new FormControl('', [
     Validators.required,
-    Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm')
+    Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)
   ])
   confirmPassword = new FormControl('', [
     Validators.required,
@@ -41,4 +41,8 @@ export class RegisterComponent {
     confirmPassword: this.confirmPassword,
     phoneNumber: this.phoneNumber
   })
+
+  register() {
+    console.log("submit button")
+  }
 }
