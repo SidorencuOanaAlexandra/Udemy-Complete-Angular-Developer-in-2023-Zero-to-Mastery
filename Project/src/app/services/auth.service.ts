@@ -16,7 +16,6 @@ export class AuthService {
     this.isAuthenticated$ = auth.user.pipe(
       map(user => !!user)
     )
-    auth.user.subscribe(console.log)
   }
 
   public async createUser(userData: IUser) {
