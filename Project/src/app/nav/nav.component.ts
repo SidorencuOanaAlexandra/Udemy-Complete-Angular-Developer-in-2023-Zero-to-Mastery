@@ -18,4 +18,9 @@ export class NavComponent implements OnInit {
     $event.preventDefault();
     this.modal.toggleModal('auth');
   }
+
+  async logout($event: Event) {
+    $event.preventDefault();
+    await this.auth.logoutUser();
+  }
 }

@@ -51,4 +51,8 @@ export class AuthService {
       password as string
     )
   }
+
+  public async logoutUser() {
+    await this.auth.signOut();
+  }
 }
