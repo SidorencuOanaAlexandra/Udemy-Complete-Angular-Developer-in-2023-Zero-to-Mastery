@@ -13,7 +13,6 @@ export class ManageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
-      console.log(params['sort'])
       this.videoOrder = params['sort'] === '2' ? params['sort'] : '1'
     })
   }
@@ -22,8 +21,11 @@ export class ManageComponent implements OnInit {
     const { value } = (event.target as HTMLSelectElement)
 
     //this.router.navigateByUrl(`/manage?sort=${value}`)
-    this.router.navigate(['clip', 'a'], {
-
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        sort: value
+      }
     })
   }
 }
