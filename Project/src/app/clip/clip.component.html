@@ -2,7 +2,7 @@
 <section class="container mx-auto my-8 bg-secondary p-6">
     <div class="rounded relative flex flex-col">
         <!-- Title and Uploader -->
-        <h1 class="font-bold mb-2 text-3xl">Video Title</h1>
+        <h1 class="font-bold mb-2 text-3xl">{{clipId}}</h1>
         <div class="text-gray-400 mb-6">
             Uploaded By Luis on
             <span>March 25, 2022</span>
@@ -24,7 +24,7 @@
 
     <!-- Video List -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <a href="#"
+        <a routerLink="/clip/b"
             class="mt-6 rounded-tl-2xl rounded-br-2xl shadow-xl bg-secondary transform hover:-translate-y-2 hover:shadow-2xl transition duration-300">
 
             <!-- Image -->

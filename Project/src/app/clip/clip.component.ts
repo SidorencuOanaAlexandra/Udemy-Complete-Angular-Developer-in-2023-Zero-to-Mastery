@@ -12,6 +12,8 @@ export class ClipComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.clipId = this.route.snapshot.params.id
+    this.route.params.subscribe(params => {
+      this.clipId = params.id
+    })
   }
 }
