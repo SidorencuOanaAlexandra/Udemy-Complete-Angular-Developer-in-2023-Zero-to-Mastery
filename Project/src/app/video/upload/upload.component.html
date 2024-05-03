@@ -2,6 +2,9 @@
 <section class="container mx-auto my-8 bg-secondary p-6">
     <div class="rounded relative flex flex-col">
         <div class="font-bold mb-6">Upload Video</div>
+        <app-alert *ngIf="showAlert" [color]="alertColor">
+            {{ alertMsg }}
+        </app-alert>
 
         <!-- Upload Dropbox -->
         <div app-event-blocker (dragend)="isDragover = false" (dragover)="isDragover = true"
