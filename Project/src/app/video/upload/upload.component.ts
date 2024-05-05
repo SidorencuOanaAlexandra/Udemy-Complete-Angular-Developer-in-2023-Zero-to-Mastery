@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-upload',
@@ -12,6 +13,13 @@ export class UploadComponent implements OnInit {
   showAlert = false
   alertColor = 'red'
   alertMsg = 'You must upload a mp4 video!'
+  title = new FormControl('', [
+    Validators.required,
+    Validators.minLength(5)
+  ])
+  uploadForm = new FormGroup({
+    title: this.title
+  }, [])
 
   constructor() { }
 
@@ -29,9 +37,16 @@ export class UploadComponent implements OnInit {
     else {
       this.formIsVisible = true;
       this.showAlert = false;
+      this.title.setValue(
+        this.file.name
+      )
     }
 
     console.log(this.file)
+  }
+
+  uploadFile() {
+    console.log("uploadFile")
   }
 
 }
