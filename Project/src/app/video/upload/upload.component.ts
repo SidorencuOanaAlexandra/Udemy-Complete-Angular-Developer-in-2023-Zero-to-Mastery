@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -15,13 +16,13 @@ export class UploadComponent implements OnInit {
   alertMsg = 'You must upload a mp4 video!'
   title = new FormControl('', [
     Validators.required,
-    Validators.minLength(5)
+    Validators.minLength(3)
   ])
   uploadForm = new FormGroup({
     title: this.title
   }, [])
 
-  constructor() { }
+  constructor(private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
   }
@@ -38,15 +39,14 @@ export class UploadComponent implements OnInit {
       this.formIsVisible = true;
       this.showAlert = false;
       this.title.setValue(
-        this.file.name
+        this.file.name.replace(/\.[^/.]+$/, '')
       )
     }
-
-    console.log(this.file)
   }
 
   uploadFile() {
-    console.log("uploadFile")
+    const clipPath = `clips/${this.file?.name}`
+
   }
 
 }
