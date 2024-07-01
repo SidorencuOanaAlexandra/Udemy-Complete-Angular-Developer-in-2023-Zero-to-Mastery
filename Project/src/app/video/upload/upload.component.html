@@ -3,7 +3,8 @@
     <div class="rounded relative flex flex-col">
         <div class="font-bold mb-6">Upload Video</div>
         <app-alert *ngIf="showAlert" [color]="alertColor">
-            {{ alertMsg }}
+            <p>{{ alertMsg }}</p>
+            <p>{{ percentage | percent }}</p>
         </app-alert>
 
         <!-- Upload Dropbox -->
@@ -42,7 +43,7 @@
                 </div>
 
                 <div class="mt-4 text-right">
-                    <button [disabled]="uploadForm.invalid" type="submit" class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition
+                    <button [disabled]="uploadForm.invalid || isSubmission" type="submit" class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition
                     hover:bg-indigo-500 disabled:opacity-50 disabled:bg-indigo-400">
                         Publish
                     </button>
