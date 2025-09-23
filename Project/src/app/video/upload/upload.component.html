@@ -4,7 +4,7 @@
         <div class="font-bold mb-6">Upload Video</div>
         <app-alert *ngIf="showAlert" [color]="alertColor">
             <p>{{ alertMsg }}</p>
-            <p>{{ percentage | percent }}</p>
+            <p *ngIf="showPercentage">{{ percentage | percent }}</p>
         </app-alert>
 
         <!-- Upload Dropbox -->

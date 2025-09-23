@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
+import { last, switchMap } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
+import { ClipService } from 'src/app/services/clip.service';
+import IClip from 'src/app/models/clip.model';
 
 @Component({
   selector: 'app-upload',
@@ -24,8 +29,16 @@ export class UploadComponent implements OnInit {
   }, [])
   isSubmission = false
   percentage = 0
+  showPercentage = false
+  user: firebase.User | null = null
 
-  constructor(private storage: AngularFireStorage) { }
+  constructor(
+    private storage: AngularFireStorage,
+    private auth: AngularFireAuth,
+    private clipService: ClipService
+  ) {
+    this.auth.user.subscribe(user => this.user = user)
+  }
 
   ngOnInit(): void {
   }
@@ -48,22 +61,49 @@ export class UploadComponent implements OnInit {
   }
 
   uploadFile() {
+    this.uploadForm.disable()
     this.showAlert = true;
     this.alertColor = 'blue'
     this.alertMsg = 'Plase wait! Your clip is being uploaded.'
     this.isSubmission = true;
+    this.showPercentage = true;
+
     const clipFileName = uuid();
     const clipPath = `clips/${clipFileName}.mp4`
 
-
-    console.log(clipFileName)
-
     const task = this.storage.upload(clipPath, this.file)
+    const clipRef = this.storage.ref(clipPath)
 
     task.percentageChanges().subscribe(progress => {
       this.percentage = progress as number / 100
+    })
 
+    task.snapshotChanges().pipe(
+      last(),
+      switchMap(() => clipRef.getDownloadURL())
+    ).subscribe({
+      next: (url) => {
+        const clip = {
+          uid: this.user?.uid as string,
+          displayName: this.user?.displayName,
+          title: this.title.value,
+          fileName: `${clipFileName}.mp4`,
+          url
+        } as IClip
+
+        this.clipService.createClip(clip)
+
+        this.alertColor = 'green'
+        this.alertMsg = 'Your clip was being uploaded with succes!'
+        this.showPercentage = false
+      },
+      error: (error) => {
+        this.uploadForm.enable()
+        this.alertColor = 'red'
+        this.alertMsg = 'Upload failed! Plase try again later!'
+        this.isSubmission = true
+        this.showPercentage = false
+      }
     })
   }
-
 }
