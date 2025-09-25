@@ -97,7 +97,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           displayName: this.user?.displayName,
           title: this.title.value,
           fileName: `${clipFileName}.mp4`,
-          url
+          url,
+          timestamps: firebase.firestore.FieldValue.serverTimestamp()
         } as IClip
 
         const clipRef = await this.clipService.createClip(clip)
