@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { ClipService } from 'src/app/services/clip.service';
 import IClip from 'src/app/models/clip.model';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -36,7 +37,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   constructor(
     private storage: AngularFireStorage,
     private auth: AngularFireAuth,
-    private clipService: ClipService
+    private clipService: ClipService,
+    private router: Router
   ) {
     this.auth.user.subscribe(user => this.user = user)
   }
@@ -89,7 +91,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       last(),
       switchMap(() => clipRef.getDownloadURL())
     ).subscribe({
-      next: (url) => {
+      next: async (url) => {
         const clip = {
           uid: this.user?.uid as string,
           displayName: this.user?.displayName,
@@ -98,11 +100,17 @@ export class UploadComponent implements OnInit, OnDestroy {
           url
         } as IClip
 
-        this.clipService.createClip(clip)
+        const clipRef = await this.clipService.createClip(clip)
 
         this.alertColor = 'green'
         this.alertMsg = 'Your clip was being uploaded with succes!'
         this.showPercentage = false
+
+        setTimeout(() => {
+          this.router.navigate([
+            'clip', clipRef.id
+          ])
+        }, 1000)
       },
       error: (error) => {
         this.uploadForm.enable()
