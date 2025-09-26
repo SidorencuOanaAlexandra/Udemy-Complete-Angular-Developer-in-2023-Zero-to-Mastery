@@ -12,6 +12,7 @@ import { ModalService } from 'src/app/services/modal.service';
 export class ManageComponent implements OnInit {
   videoOrder = '1';
   clips: IClip[] = []
+  activeClip: IClip | null = null
 
   constructor(private router: Router, 
     private route: ActivatedRoute,
@@ -48,6 +49,10 @@ export class ManageComponent implements OnInit {
 
   openEditClipModal($event: Event, clip: IClip) {
     $event.preventDefault()
+    this.activeClip = clip;
+    
     this.modalService.toggleModal('editClip')
+
+    
   }
 }
