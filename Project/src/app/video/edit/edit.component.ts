@@ -1,9 +1,8 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import IClip from 'src/app/models/clip.model';
 import { ClipService } from 'src/app/services/clip.service';
 import { ModalService } from 'src/app/services/modal.service';
-import { ModalComponent } from 'src/app/shared/modal/modal.component';
 
 @Component({
   selector: 'app-edit',
@@ -12,6 +11,8 @@ import { ModalComponent } from 'src/app/shared/modal/modal.component';
 })
 export class EditComponent implements OnInit, OnDestroy, OnChanges {
   @Input() activeClip: IClip | null = null
+  @Output() updateClip = new EventEmitter()
+
   modalId = 'editClip'
   clipId = new FormControl('')
   title = new FormControl('', [
@@ -34,11 +35,12 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.editForm.invalid)
     if (!this.activeClip) {
       return
     }
 
+    this.inSubmission = false;
+    this.showAlert = false
     this.clipId.setValue(this.activeClip.docId)
     this.title.setValue(this.activeClip.title)
   }
@@ -52,6 +54,9 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   async submit() {
+    if(!this.activeClip) {
+      return 
+    }
     this.inSubmission = true
     this.alertColor = 'blue'
     this.showAlert = true
@@ -66,12 +71,11 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
       this.alertMessage = 'Something went wrong. Try again later'
     }
 
+    this.activeClip.title = this.title.value
+    this.updateClip.emit(this.activeClip)
+
     this.inSubmission = false;
     this.alertColor = 'green'
     this.alertMessage = 'Succes!'
-
-    setTimeout(x => {
-
-    },1000)
   }
 }

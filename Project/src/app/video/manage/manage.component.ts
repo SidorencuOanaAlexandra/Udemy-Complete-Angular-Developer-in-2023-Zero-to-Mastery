@@ -55,4 +55,12 @@ export class ManageComponent implements OnInit {
 
     
   }
+
+  updateClip($event: IClip) {
+    this.clips.forEach((element, index) => {
+      if(element.docId == $event.docId) {
+        this.clips[index].title  = $event.title
+      }
+    })
+  }
 }

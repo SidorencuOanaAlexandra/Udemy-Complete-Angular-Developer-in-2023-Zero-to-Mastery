@@ -16,7 +16,7 @@
         </div>
 
         <div class="mt-4 text-right">
-            <button [disabled]="editForm.invalid && inSubmission"
+            <button [disabled]="editForm.invalid || inSubmission"
                 type="submit"
                 [ngClass]="{
                     'opacity-50': inSubmission,
