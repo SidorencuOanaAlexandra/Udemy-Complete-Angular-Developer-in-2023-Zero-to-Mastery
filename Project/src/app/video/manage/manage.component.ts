@@ -50,16 +50,26 @@ export class ManageComponent implements OnInit {
   openEditClipModal($event: Event, clip: IClip) {
     $event.preventDefault()
     this.activeClip = clip;
-    
     this.modalService.toggleModal('editClip')
-
-    
   }
 
   updateClip($event: IClip) {
     this.clips.forEach((element, index) => {
       if(element.docId == $event.docId) {
         this.clips[index].title  = $event.title
+      }
+    })
+  }
+
+  deleteClip($event: Event, clip: IClip) {
+    $event.preventDefault()
+    console.log(clip)
+    
+    this.clipService.deleteClip(clip)
+
+    this.clips.forEach((element, index) => {
+      if(element.docId == clip.docId) {
+        this.clips.splice(index,1)
       }
     })
   }
