@@ -8,7 +8,7 @@
         </app-alert>
 
         <!-- Upload Dropbox -->
-         <ng-component *ngIf="!formIsVisible; else uploadFormCtr">
+         <ng-container *ngIf="!formIsVisible; else uploadFormCtr">
             <div app-event-blocker (dragend)="isDragover = false"
                 (dragover)="isDragover = true" (dragenter)="isDragover = true" (dragleave)="isDragover = false"
                 (mouseleave)="isDragover = false" (drop)="storeFile($event)" [ngClass]="{
@@ -19,7 +19,7 @@
                 <h5>Drop your file here (mp4 only!)</h5>
             </div>
             <input type="file" class="mt-4" (change)="storeFile($event)">
-         </ng-component>
+        </ng-container>
 
 
         <!-- Video Editor -->
