@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import IClip from 'src/app/models/clip.model';
 import { ClipService } from 'src/app/services/clip.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -9,7 +10,9 @@ import { ModalService } from 'src/app/services/modal.service';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+export class ManageComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  sort$: BehaviorSubject<string>
   videoOrder = '1';
   clips: IClip[] = []
   activeClip: IClip | null = null
@@ -18,15 +21,18 @@ export class ManageComponent implements OnInit {
     private route: ActivatedRoute,
     private clipService: ClipService,
     private modalService: ModalService
-  ) { }
+  ) { 
+    this.sort$ = new BehaviorSubject(this.videoOrder)
+  }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
       this.videoOrder = params['sort'] === '2' ? params['sort'] : '1'
+      this.sort$.next(this.videoOrder)
+    
     })
-    this.clipService.getUserClips().subscribe(docs => {
+    this.clipService.getUserClips(this.sort$).pipe(takeUntil(this.destroy$)).subscribe(docs => {
       this.clips = []
-
       docs.forEach(doc => {
         this.clips.push({
           docId: doc.id,
@@ -34,6 +40,11 @@ export class ManageComponent implements OnInit {
         })
       })
     })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   sort($event: Event) {
