@@ -6,6 +6,7 @@ import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 })
 export class FfmpegService {
   isReady = false;
+  isrunning = false;
   private ffmpeg
 
   constructor() { 
@@ -22,11 +23,12 @@ export class FfmpegService {
   }
 
   async getScreenshots(file: File) {
+    this.isrunning = true;
     const data = await fetchFile(file)
 
     this.ffmpeg.FS('writeFile', file.name, data)
 
-    const seconds = ['03','13','23']
+    const seconds = ['03','05','07']
     const commands: string[] = []
 
     seconds.forEach(second => {
@@ -61,7 +63,7 @@ export class FfmpegService {
 
     })
 
-    
+    this.isrunning = false;
       return screenshots
   }
 }
