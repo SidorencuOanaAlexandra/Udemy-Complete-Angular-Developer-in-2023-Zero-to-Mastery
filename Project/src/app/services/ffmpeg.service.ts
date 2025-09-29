@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 
 @Injectable({
@@ -9,7 +10,7 @@ export class FfmpegService {
   isrunning = false;
   private ffmpeg
 
-  constructor() { 
+  constructor(private auth: AngularFireAuth) { 
     this.ffmpeg = createFFmpeg({log: true})
   }
 
@@ -65,5 +66,12 @@ export class FfmpegService {
 
     this.isrunning = false;
       return screenshots
+  }
+
+  async blobFromURL(url: string) {
+    const response = await fetch(url)
+    const blob = await response.blob()
+
+    return blob
   }
 }

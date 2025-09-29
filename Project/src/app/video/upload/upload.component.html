@@ -8,11 +8,11 @@
         </app-alert>
 
         <ng-container>
-            <span *ngIf="!ffmpegService.isReady; else uploadFormData" class="material-icon text-center text-6x1 p-8 animate-spin">
+            <span *ngIf="!ffmpegService.isReady; else uploadFormData" class="material-icons text-center text-6x1 p-8 animate-spin">
                 settings
             </span>
         </ng-container>
-        
+
         <ng-template #uploadFormData>
                     <!-- Upload Dropbox -->
             <ng-container *ngIf="!formIsVisible; else uploadFormCtr">
@@ -24,7 +24,7 @@
                     border-gray-400 transition duration-500 hover:text-white
                     hover:bg-indigo-400 hover:border-indigo-400 hover:border-solid text-xl">
                     <h5>Drop your file here (mp4 only!)</h5>
-                    <span *ngIf="ffmpegService.isrunning" class="material-icon text-center text-6x1 p-8 animate-spin">
+                    <span *ngIf="ffmpegService.isrunning" class="material-icons text-center text-6x1 p-8 animate-spin">
                         autorenew
                     </span>
                 </div>
@@ -38,7 +38,11 @@
                     <!-- Screenshots -->
                     <h2 class="mb-4 text-xl">Select a Thumbnail</h2>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <div *ngFor="let screenshot of screenshots" class="border-8 cursor-pointer border-green-400">
+                        <div *ngFor="let screenshot of screenshots" class="border-8 cursor-pointer " 
+                            [ngClass]="{ 
+                                'border-green-400': screenshot == selectedScreenshot,
+                                'border-transpare': screenshot != selectedScreenshot
+                             }" (click)="selectedScreenshot = screenshot">
                             <img [src]="screenshot | safeURL">
                         </div>
                     </div>
