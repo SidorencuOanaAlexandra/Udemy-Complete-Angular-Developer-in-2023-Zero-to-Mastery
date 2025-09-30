@@ -39,6 +39,7 @@ export class ManageComponent implements OnInit, OnDestroy {
           ...doc.data()
         })
       })
+      console.log(this.clips)
     })
   }
 
