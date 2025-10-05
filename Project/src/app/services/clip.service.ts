@@ -62,7 +62,7 @@ export class ClipService {
     }
 
     this.pendingReq = true
-    let query = this.clipsCollection.ref.orderBy('timestamp', 'desc').limit(6)
+    let query = this.clipsCollection.ref.orderBy('timestamps', 'desc').limit(6)
 
     const { length } = this.pageClips
 
@@ -83,6 +83,8 @@ export class ClipService {
         ...doc.data()
       })
     })
+
+    console.log(this.pageClips)
 
     this.pendingReq = false
   }

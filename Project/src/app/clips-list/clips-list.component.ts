@@ -8,7 +8,10 @@ import { ClipService } from '../services/clip.service';
 })
 export class ClipsListComponent implements OnInit, OnDestroy {
 
-  constructor(private clipService: ClipService) { }
+  constructor(public clipService: ClipService) { 
+    this.clipService.getClips()
+    console.log(clipService.pageClips)
+  }
 
   ngOnInit(): void {
     window.addEventListener('scroll', this.handleScroll)
@@ -22,6 +25,7 @@ export class ClipsListComponent implements OnInit, OnDestroy {
 
     if(bottomOfWindow) {
       console.log("request data")
+      this.clipService.getClips()
     }
   }
 
