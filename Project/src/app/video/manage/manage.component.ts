@@ -85,4 +85,18 @@ export class ManageComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  async copyToClipboard($event: MouseEvent, clipId: string | undefined) {
+    $event.preventDefault()
+
+    if(!clipId) {
+      return
+    }
+
+    const url = `${location.origin}/clip/${clipId}`
+
+    await navigator.clipboard.writeText(url)
+
+    alert('Link Copied!')
+  }
 }
