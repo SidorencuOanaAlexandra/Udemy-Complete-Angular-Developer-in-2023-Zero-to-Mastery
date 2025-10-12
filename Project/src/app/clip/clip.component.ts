@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import videojs from 'video.js';
-import { ClipService } from '../services/clip.service';
 import IClip from '../models/clip.model';
 import { DatePipe } from '@angular/common';
 
@@ -17,7 +16,7 @@ export class ClipComponent implements OnInit {
   player?: any
   clip?: IClip
 
-  constructor(private route: ActivatedRoute, private clipService: ClipService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.player = videojs(this.target?.nativeElement)

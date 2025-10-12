@@ -13,7 +13,6 @@ export class ClipsListComponent implements OnInit, OnDestroy {
 
   constructor(public clipService: ClipService) { 
     this.clipService.getClips()
-    console.log(clipService.pageClips)
   }
 
   ngOnInit(): void {
@@ -29,7 +28,6 @@ export class ClipsListComponent implements OnInit, OnDestroy {
     const bottomOfWindow = Math.round(scrollTop) + innerHeight === offsetHeight
 
     if(bottomOfWindow) {
-      console.log("request data")
       this.clipService.getClips()
     }
   }

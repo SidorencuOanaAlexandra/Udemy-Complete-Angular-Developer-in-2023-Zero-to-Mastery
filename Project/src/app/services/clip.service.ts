@@ -35,7 +35,6 @@ export class ClipService implements Resolve<IClip | null> {
         if(!user) {
           return of([])
         }
-        console.log('getUserClips')
         const query = this.clipsCollection.ref.where('uid', '==', user.uid).orderBy('timestamps', sort === '1' ? 'desc' : 'asc')
 
         return query.get()
@@ -45,9 +44,7 @@ export class ClipService implements Resolve<IClip | null> {
   }
 
   updateClip(clipId: string, title: string) {
-    return this.clipsCollection.doc(clipId).update({
-      title
-    })
+    return this.clipsCollection.doc(clipId).update({title})
   }
 
   async deleteClip(clip: IClip) {
@@ -86,8 +83,6 @@ export class ClipService implements Resolve<IClip | null> {
         ...doc.data()
       })
     })
-
-    console.log(this.pageClips)
 
     this.pendingReq = false
   }
