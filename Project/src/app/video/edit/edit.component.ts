@@ -34,7 +34,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     private clipService: ClipService
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (!this.activeClip) {
       return
     }

@@ -39,7 +39,7 @@ export class FfmpegService {
         //output options
         '-ss', `00:00:${second}`,
         '-frames:v', '1',
-        '-filter:v', 'scale=510:-1',
+        '-filter:v', 'scale=510:287',
         //outpu
         `output_${second}.png`
       )

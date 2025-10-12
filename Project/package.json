@@ -21,9 +21,14 @@
     "@angular/router": "~13.3.0",
     "@ffmpeg/core": "^0.12.10",
     "@ffmpeg/ffmpeg": "^0.11.6",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/uuid": "^10.0.0",
+    "@types/video.js": "^7.3.58",
+    "@videojs/themes": "^1.0.1",
+    "autoprefixer": "^10.4.21",
     "firebase-tools": "^12.9.1",
     "ngx-mask": "^13.2.2",
+    "postcss": "^8.5.6",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "uuid": "^10.0.0",
@@ -41,7 +46,8 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "tailwindcss": "^3.4.1",
-    "typescript": "~4.6.2"
+    "tailwindcss": "^3.4.18",
+    "typescript": "~4.6.2",
+    "video.js": "^8.23.4"
   }
 }
